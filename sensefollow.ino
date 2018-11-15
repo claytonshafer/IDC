@@ -25,7 +25,6 @@ void setup() {
   digitalWrite(3, LOW);
 servoLeft.attach(12);
 servoRight.attach(11);
-Serial.begin(9600);
 int intcount = 0;
 bool go = true;
 int location = 0;
@@ -92,21 +91,23 @@ while (go){
   servoRight.writeMicroseconds(1500);
   delay(1000);
   intcount++;
-  Serial2.print(location); 
  Serial.println(heightfunction());
  Serial.println(colorfunction());
   if (heightfunction() < 200 && colorfunction() > 3500)
   {
     location = intcount;
     Serial.println(location);
-    Serial.println("mark");   
+    Serial.println("mark"); 
+    digitalWrite(2, HIGH);
+    delay(1000);
+    digitalWrite(2, LOW);  
   }
-  else {
-    
-  }
+  if (intcount < 5) {
   servoLeft.writeMicroseconds(1600);
   servoRight.writeMicroseconds(1400);
-  delay(300);
+  delay(200);
+  }
+  
   break;
   default:
   //nothing
@@ -116,7 +117,7 @@ while (go){
  }
  if (intcount == 5){
   go = false;
-  Serial2.print("Block location: ");
+  Serial2.print("L");
   Serial2.print(location);
   servoLeft.writeMicroseconds(1500);
   servoRight.writeMicroseconds(1500);
